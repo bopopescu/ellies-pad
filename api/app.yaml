@@ -1,0 +1,23 @@
+application: elliespad
+version: v0-0-1
+runtime: go
+api_version: go1
+
+handlers:
+- url: /_ah/.*
+  script: _go_app
+  login: admin
+- url: /api/.*
+  script: _go_app
+- url: /dist
+  static_dir: web/dist
+
+# Production assets.
+# - url: /.*
+#  static_files: web/dist/main.html
+#  upload: web/dist/main.html
+
+# Development assets.
+- url: /.*
+  static_files: web/src/main.html
+  upload: web/src/main.html
