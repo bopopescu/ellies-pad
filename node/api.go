@@ -10,6 +10,7 @@ import (
 	"github.com/verticalpalette/ae/apiutil"
 )
 
+// Routes adds Node-specific routing.
 func Routes(r *mux.Router) {
 	ns := r.Path("/nodes").Subrouter()
 	ns.Methods("GET").Handler(listNodes)

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/verticalpalette/elliespad/node"
+	"github.com/verticalpalette/ellies-pad/node"
 )
 
 func init() {
