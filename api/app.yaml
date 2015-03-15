@@ -1,5 +1,5 @@
-application: elliespad
-version: v0-0-1
+application: ellies-pad
+version: v0-0-0
 runtime: go
 api_version: go1
 
