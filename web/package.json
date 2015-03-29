@@ -7,6 +7,7 @@
     "test": "gulp test"
   },
   "devDependencies": {
+    "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-inject": "^1.2.0",
     "gulp-util": "^3.0.4",
