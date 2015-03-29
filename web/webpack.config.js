@@ -2,20 +2,15 @@ var webpack = require("webpack");
 
 module.exports = {
   context: __dirname,
-  devtool: "inline-source-map",
   entry: "./src/app.js",
   module: {
-    preloaders: [],
+    preloaders: [
+    ],
     loaders: [
-      {test: /\.jsx/, loaders: ["jsx-loader"]},
-      {test: /\.less/, loaders: ["style-loader", "css-loader", "less-loader"]}
+      {test: /\.js$/, loaders: ["envify-loader"]}
     ]
   },
   output: {
-    path: __dirname + "/dist",
     filename: "app.js"
-  },
-  plugins: [
-    // new webpack.optimize.UglifyJsPlugin({})
-  ]
+  }
 };

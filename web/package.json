@@ -8,6 +8,8 @@
   },
   "devDependencies": {
     "del": "^1.1.1",
+    "envify": "^1.2.1",
+    "envify-loader": "^0.1.0",
     "gulp": "^3.8.11",
     "gulp-inject": "^1.2.0",
     "gulp-util": "^3.0.4",
@@ -16,6 +18,7 @@
   },
   "dependencies": {
     "color": "^0.8.0",
+    "lodash": "^3.6.0",
     "radium": "^0.10.0",
     "react": "^0.12.2",
     "react-router": "^0.12.4"
