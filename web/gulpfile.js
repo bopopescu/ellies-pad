@@ -1,51 +1,105 @@
-var _ = require("lodash");
-var del = require("del");
-var gulp = require("gulp");
-var gulpWebpack = require("gulp-webpack");
-var inject = require("gulp-inject");
-var util = require("gulp-util");
+/* jshint node: true, browser: false */
+"use strict";
 
-// Webpack.
-var webpack = require("webpack");
-var webpackDevServer = require("webpack-dev-server");
+var _ = require("lodash");
+var beautify = require("gulp-jsbeautifier");
+var browserify = require("browserify");
+var browserSync = require("browser-sync");
+var buffer = require("vinyl-buffer");
+var del = require("del");
+// var envify = require("envify");
+var gulp = require("gulp");
+var gulpif = require("gulp-if");
+var inject = require("gulp-inject");
+var jshint = require("gulp-jshint");
+var jshintcli = require("jshint/src/cli");
+var source = require("vinyl-source-stream");
+var sourcemaps = require("gulp-sourcemaps");
+// var strictify = require("strictify");
+var uglify = require("gulp-uglify");
+var util = require("gulp-util");
+var watchify = require("watchify");
 
 var env = process.env.NODE_ENV || "development";
 
-var webpackConfig = require("./webpack.config");
+var bundler = watchify(browserify(watchify.args));
+bundler.add("./src/app.js");
+// bundler.transform("strictify");
+// bundler.transform(envify({
+//     NODE_ENV: JSON.stringify(env),
+//     API_URL: (function() {
+//         if (env === "production") {
+//             return "http://elliespad.com/api";
+//         } else {
+//             return "http://localhost:8080/api";
+//         }
+//     })()
+// }));
+bundler.on("log", util.log);
 
-if (env === "production") {
-  _.merge(webpackConfig, {
-    devtool: "source-map",
-    plugins: [
-      new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(env),
-        "process.env.API_URL": JSON.stringify("http://elliespad.com/api")
-      }),
-      new webpack.optimize.UglifyJsPlugin()
-    ]
-  });
-} else {
-  _.merge(webpackConfig, {
-    devtool: "eval",
-    plugins: [
-      new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(env),
-        "process.env.API_URL": JSON.stringify("http://localhost:8080/api")
-      })
-    ]
-  });
+function bundle() {
+    return bundler.bundle()
+        .on("error", util.log.bind(util, "Browserify Error"))
+        .pipe(source("bundle.js"))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({
+            loadMaps: true
+        }))
+        .pipe(gulpif(env === "production", uglify()))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("dist/"));
 }
+bundler.on("update", bundle);
 
-gulp.task("build", ["clean"], function() {
-  var dist = gulp.src(webpackConfig.entry)
-    .pipe(gulpWebpack(webpackConfig))
-    .pipe(gulp.dest("dist/"));
+gulp.task("build-watch", ["build"], browserSync.reload);
 
-  return gulp.src("src/app.html")
-    .pipe(inject(dist, {relative: true}))
-    .pipe(gulp.dest("dist/"));
+gulp.task("build", ["clean", "lint"], function() {
+    return gulp.src("src/app.html")
+        .pipe(inject(bundle(), {
+            relative: true
+        }))
+        .pipe(gulp.dest("dist/"));
 });
 
 gulp.task("clean", function(callback) {
-  del(["dist/"], callback);
+    del(["dist/"], callback);
+});
+
+gulp.task("format", function() {
+    return gulp.src(["*.js", "src/**/*.js"])
+        .pipe(beautify({
+            config: ".jsbeautifyrc",
+            mode: "VERIFY_ONLY"
+        }));
+});
+
+gulp.task("lint", ["format"], function() {
+    var jshintrc = jshintcli.getConfig("./.jshintrc");
+    delete jshintrc.dirname;
+
+    return gulp.src(["*.js", "src/**/*.js"])
+        .pipe(jshint(_.merge(jshintrc, {
+            devel: env === "development"
+        })))
+        .pipe(jshint.reporter("jshint-stylish"))
+        .pipe(jshint.reporter("fail"));
+});
+
+gulp.task("serve", ["build"], function() {
+    browserSync({
+        notify: true,
+        server: {
+            baseDir: ".",
+            index: "dist/app.html"
+        },
+        port: 8081,
+        ghostMode: {
+            click: false,
+            form: false,
+            location: false,
+            scroll: false
+        },
+        online: true
+    });
+    gulp.watch("src/", ["build-watch"]);
 });
