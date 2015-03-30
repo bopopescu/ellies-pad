@@ -99,5 +99,5 @@ gulp.task("serve", ["build"], function() {
         },
         online: true
     });
-    gulp.watch("src/", ["build-watch"]);
+    gulp.watch("src/**/*", ["build-watch"]);
 });
