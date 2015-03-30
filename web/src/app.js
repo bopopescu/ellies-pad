@@ -2,7 +2,7 @@ var React = require("React");
 
 var App = React.createClass({
     render: function() {
-        return React.DOM.div(null, "Hello, World!");
+        return React.DOM.div(null, process.env.NODE_ENV);
     }
 });
 

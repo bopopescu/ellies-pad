@@ -7,7 +7,7 @@ var browserify = require("browserify");
 var browserSync = require("browser-sync");
 var buffer = require("vinyl-buffer");
 var del = require("del");
-// var envify = require("envify");
+var envify = require("envify/custom");
 var gulp = require("gulp");
 var gulpif = require("gulp-if");
 var inject = require("gulp-inject");
@@ -15,7 +15,6 @@ var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
-// var strictify = require("strictify");
 var uglify = require("gulp-uglify");
 var util = require("gulp-util");
 var watchify = require("watchify");
@@ -24,17 +23,17 @@ var env = process.env.NODE_ENV || "development";
 
 var bundler = watchify(browserify(watchify.args));
 bundler.add("./src/app.js");
-// bundler.transform("strictify");
-// bundler.transform(envify({
-//     NODE_ENV: JSON.stringify(env),
-//     API_URL: (function() {
-//         if (env === "production") {
-//             return "http://elliespad.com/api";
-//         } else {
-//             return "http://localhost:8080/api";
-//         }
-//     })()
-// }));
+bundler.transform("strictify");
+bundler.transform(envify({
+    NODE_ENV: env,
+    API_URL: (function() {
+        if (env === "production") {
+            return "http://elliespad.com/api";
+        } else {
+            return "http://localhost:8080/api";
+        }
+    })()
+}));
 bundler.on("log", util.log);
 
 function bundle() {
@@ -94,10 +93,9 @@ gulp.task("serve", ["build"], function() {
         },
         port: 8081,
         ghostMode: {
-            click: false,
-            form: false,
-            location: false,
-            scroll: false
+            clicks: true,
+            forms: true,
+            scroll: true
         },
         online: true
     });
