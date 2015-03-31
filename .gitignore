@@ -1,7 +1,10 @@
 # OS X
 .DS_Store
 
-# Generated directories
+# NPM
 node_modules/
+npm-debug.log
+
+# Go
 bin/
 pkg/
