@@ -19,10 +19,7 @@ source "$ELLIESPATH/tools/antigen/antigen.zsh"
 
 # zsh themes and plugins
 antigen use oh-my-zsh
-
-antigen bundle colorize
 antigen bundle git
 antigen bundle golang
 antigen bundle npm
-
 antigen theme minimal
