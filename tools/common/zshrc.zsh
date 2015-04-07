@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 
 ZSHRC_DIR=$(dirname $0:A)
-export ELLIESPATH=${ZSHRC_DIR/\/tools/}
+export ELLIESPATH=${ZSHRC_DIR/\/tools\/common/}
 export GOPATH=${ELLIESPATH/src\/github.com\/verticalpalette\/ellies-pad/}
 
 # git subrepo
-source "$ELLIESPATH/tools/git-subrepo/init"
+source "$ELLIESPATH/tools/common/git-subrepo/init"
 
 # antigen
-source "$ELLIESPATH/tools/antigen/antigen.zsh"
+source "$ELLIESPATH/tools/common/antigen/antigen.zsh"
 
 # zsh themes and plugins
 antigen use oh-my-zsh

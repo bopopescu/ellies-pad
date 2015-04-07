@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 ZSHRC_OSX="$0:A"
-ZSHRC=${ZSHRC_OSX/\/osx\/zshrc.zsh/\/zshrc.zsh}
+ZSHRC=${ZSHRC_OSX/\/osx\/zshrc.zsh/\/common\/zshrc.zsh}
 
 source "$ZSHRC"
 
