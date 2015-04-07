@@ -3,15 +3,12 @@ go:
   - 1.4.1
 
 install:
-  - export FILE="go_appengine_sdk_linux_amd64-1.9.18.zip"
-  - wget --no-verbose "https://storage.googleapis.com/appengine-sdks/featured/$FILE"
-  - unzip -q "$FILE"
-  - ./go_appengine/goapp get ./node
+  - ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goapp get ./node
 
 script:
-  - ./go_appengine/goapp test ./api
+  - ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goapp test ./api
 
 after_success: |
   test "$TRAVIS_PULL_REQUEST" == "false" && \
   test "$TRAVIS_BRANCH" == "master" && \
-  echo "$GAE_PASSWORD" | ./go_appengine/appcfg.py update ./api --email="$GAE_EMAIL" --passin
+  echo "$APPENGINE_PASSWORD" | ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/appcfg.py update ./api --email="$APPENGINE_EMAIL" --passin
