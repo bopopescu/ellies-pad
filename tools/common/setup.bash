@@ -43,16 +43,16 @@ if [[ $? -ne 0 ]]; then
   echo "$include" >> .git/config
 fi
 
-echo ">> Installing go tools."
-goapp get -u github.com/golang/lint/golint
-goapp get -u github.com/nsf/gocode
-goapp get -u golang.org/x/tools/cmd/cover
-goapp get -u golang.org/x/tools/cmd/goimports
-goapp get -u golang.org/x/tools/cmd/oracle
-goapp get -u sourcegraph.com/sqs/goreturns
+# echo ">> Installing go tools."
+# goapp get -u github.com/golang/lint/golint
+# goapp get -u github.com/nsf/gocode
+# goapp get -u golang.org/x/tools/cmd/cover
+# goapp get -u golang.org/x/tools/cmd/goimports
+# goapp get -u golang.org/x/tools/cmd/oracle
+# goapp get -u sourcegraph.com/sqs/goreturns
 
 # Atom.
-which apm
+which -s apm
 if [[ $? -eq 0 ]]; then
   echo ">> Installing atom packages."
   apm install Sublime-Style-Column-Selection
