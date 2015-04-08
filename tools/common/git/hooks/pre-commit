@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 set -e -x
 
+cd "$ELLIESPAD"
+golint ./api
+golint ./task
+
 cd "$ELLIESPATH/web"
 npm run gulp -- lint
