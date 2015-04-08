@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e -x
 
-cd "$ELLIESPAD"
+cd "$ELLIESPATH"
 golint ./api
 golint ./task
 
