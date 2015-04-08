@@ -3,6 +3,7 @@
 ZSHRC_DIR=$(dirname $0:A)
 export ELLIESPATH=${ZSHRC_DIR/\/tools\/common/}
 export GOPATH=${ELLIESPATH/src\/github.com\/verticalpalette\/ellies-pad/}
+export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
 
 alias ep="cd $ELLIESPATH"
 
