@@ -4,6 +4,7 @@
   "description": "Ellie's Pad",
   "repository": "github.com/verticalpalette/ellies-pad/web",
   "scripts": {
+    "gulp": "gulp",
     "test": "gulp test"
   },
   "devDependencies": {
