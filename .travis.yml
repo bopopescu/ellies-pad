@@ -1,19 +1,16 @@
-language: go
-go:
-  - 1.4.1
-
 # Use container infrastructure.
 sudo: false
 
 install:
-  - ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goapp get ./node
+  - export ELLIESPATH="$TRAVIS_BUILD_DIR"
+  - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
+  - tools/common/setup.bash
 
 script:
-  - ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goapp test ./api
+  - goapp test ./api
 
 after_success: |
   test "$TRAVIS_PULL_REQUEST" == "false" && \
   test "$TRAVIS_BRANCH" == "master" && \
   echo "$APPENGINE_PASSWORD" | \
-    ./tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/appcfg.py update ./api \
-    --email="$APPENGINE_EMAIL" --passin
+    appcfg.py update ./api \ --email="$APPENGINE_EMAIL" --passin

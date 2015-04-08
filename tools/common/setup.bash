@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-if [[ -z "$ELLIESPATH" ]]; then
+if [[ -z $ELLIESPATH ]]; then
   echo "Please set \$ELLIESPATH."
   exit 1
 fi
 
-# TODO #multi-platform @daniel Support more than just 64-bit OSX.
-if [[ $PATH != *"$ELLIESPATH/tools/osx/64-bit/bin"* ]]; then
-  echo "Please add \$ELLIESPATH/tools/osx/64-bit/bin to your \$PATH."
+if ! [[ $PATH =~ /tools/(linux|osx)/64-bit/bin ]]; then
+  echo "Please add \$ELLIESPATH/tools/{linux,osx}/64-bit/bin to your \$PATH."
   exit 1
 fi
 
@@ -19,6 +18,10 @@ goapp get ./node
 
 echo ">> Installing npm packages."
 (cd web && npm install)
+
+if ! [[ -z $TRAVIS ]]; then
+  exit 0
+fi
 
 echo
 echo ">> Installing optional tools."
