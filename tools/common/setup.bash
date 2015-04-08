@@ -20,6 +20,13 @@ goapp get ./node
 echo ">> Installing npm packages."
 (cd web && npm install)
 
+echo ">> Installing git config."
+include=$'[include]\n\tpath = ../tools/common/git/config'
+grep --fixed-strings --quiet "$include" .git/config
+if [[ $? -ne 0 ]]; then
+  echo "$include" >> .git/config
+fi
+
 echo ">> Installing git hooks."
 rm -rf .git/hooks
 ln -s ../tools/common/git/hooks .git/hooks
