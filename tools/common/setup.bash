@@ -11,17 +11,12 @@ if ! [[ $PATH =~ /tools/(linux|osx)/64-bit/bin ]]; then
   exit 1
 fi
 
-if [[ -z $GOPATH ]]; then
-  echo "Please set \$GOPATH."
+if ! [[ $GOPATH =~ /tools/common/gopath ]]; then
+  echo "Please add \$ELLIESPATH/tools/common/gopath to your \$GOPATH."
   exit 1
 fi
 
 cd "$ELLIESPATH"
-
-if ! [[ $GOPATH =~ /tools/common/gopath ]]; then
-  echo ">> Adding go packages to \$GOPATH."
-  export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
-fi
 
 echo ">> Installing npm packages."
 (cd web && npm install)
