@@ -18,8 +18,10 @@ fi
 
 cd "$ELLIESPATH"
 
-echo ">> Installing go packages."
-goapp get ./task
+if ! [[ $GOPATH =~ /tools/common/gopath ]]; then
+  echo ">> Adding go packages to \$GOPATH."
+  export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
+fi
 
 echo ">> Installing npm packages."
 (cd web && npm install)
