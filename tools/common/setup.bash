@@ -43,6 +43,7 @@ if [[ $? -ne 0 ]]; then
   echo "$include" >> .git/config
 fi
 
+# TODO @daniel Enable this.
 # echo ">> Installing go tools."
 # goapp get -u github.com/golang/lint/golint
 # goapp get -u github.com/nsf/gocode
