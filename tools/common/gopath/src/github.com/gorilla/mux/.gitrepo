@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:gorilla/mux.git
+	branch = master
+	commit = 8096f47503459bcc74d1f4c487b7e6e42e5746b5
+	parent = f14502b28f1b8b69020e04d63165b0ca40687efd
+	cmdver = 0.2.1
