@@ -19,7 +19,7 @@ fi
 cd "$ELLIESPATH"
 
 echo ">> Installing go packages."
-goapp get ./node
+goapp get ./task
 
 echo ">> Installing npm packages."
 (cd web && npm install)
