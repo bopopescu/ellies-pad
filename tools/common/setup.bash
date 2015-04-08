@@ -11,6 +11,11 @@ if ! [[ $PATH =~ /tools/(linux|osx)/64-bit/bin ]]; then
   exit 1
 fi
 
+if [[ -z $GOPATH ]]; then
+  echo "Please set \$GOPATH."
+  exit 1
+fi
+
 cd "$ELLIESPATH"
 
 echo ">> Installing go packages."
@@ -19,6 +24,7 @@ goapp get ./node
 echo ">> Installing npm packages."
 (cd web && npm install)
 
+# Don't install development tools on Travis CI.
 if ! [[ -z $TRAVIS ]]; then
   exit 0
 fi

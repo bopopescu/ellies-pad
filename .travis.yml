@@ -1,3 +1,8 @@
+# Set the $GOPATH.
+language: go
+go:
+  - 1.4.1
+
 # Use container infrastructure.
 sudo: false
 
