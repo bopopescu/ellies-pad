@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:golang/lint.git
+	branch = master
+	commit = 3b3fdebcde972819016da7b8377e79651998f5fc
+	parent = 2dbce546520592055bbec0c34537c97e5a033c77
+	cmdver = 0.2.1
