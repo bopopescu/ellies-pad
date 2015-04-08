@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:zsh-users/antigen.git
+	branch = master
+	commit = 30098c1d9955b8548aa827588c0d2c9be077c6f2
+	parent = 411707db394c0814f0ab448affc99017c5cc2348
+	cmdver = 0.2.1

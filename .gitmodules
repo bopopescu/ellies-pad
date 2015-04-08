@@ -1,0 +1,5 @@
+[submodule "tools/common/git-subrepo"]
+	path = tools/common/git-subrepo
+	url = git@github.com:ingydotnet/git-subrepo.git
+	branch = master
+	update = merge
