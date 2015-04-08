@@ -15,6 +15,7 @@ fi
 cd "$ELLIESPATH"
 
 echo ">> Installing go packages."
+goapp get ./node
 
 echo ">> Installing npm packages."
 (cd web && npm install)
