@@ -4,6 +4,8 @@ ZSHRC_DIR=$(dirname $0:A)
 export ELLIESPATH=${ZSHRC_DIR/\/tools\/common/}
 export GOPATH=${ELLIESPATH/src\/github.com\/verticalpalette\/ellies-pad/}
 
+alias ep="cd $ELLIESPATH"
+
 # git subrepo
 source "$ELLIESPATH/tools/common/git-subrepo/init"
 
