@@ -1,1 +1,3 @@
+# Lots of tools need to be checked in verbatim,
+# so don't implicitly ignore anything.
 !*
