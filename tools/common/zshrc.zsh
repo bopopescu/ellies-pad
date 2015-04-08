@@ -7,7 +7,9 @@ export GOPATH=${ELLIESPATH/src\/github.com\/verticalpalette\/ellies-pad/}
 alias ep="cd $ELLIESPATH"
 
 # git subrepo
-source "$ELLIESPATH/tools/common/git-subrepo/init"
+if [[ $PATH != *$ELLIESPATH/tools/common/git-subrepo* ]]; then
+  source "$ELLIESPATH/tools/common/git-subrepo/init"
+fi
 
 # antigen
 source "$ELLIESPATH/tools/common/antigen/antigen.zsh"
