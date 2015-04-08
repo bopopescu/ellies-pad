@@ -9,6 +9,7 @@ sudo: false
 install:
   - export ELLIESPATH="$TRAVIS_BUILD_DIR"
   - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
+  - export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
   - tools/common/setup.bash
 
 script:
