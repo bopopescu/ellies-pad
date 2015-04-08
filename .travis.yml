@@ -17,7 +17,9 @@ install:
   - tools/common/setup.bash
 
 script:
+  - tools/common/git/hooks/pre-commit
   - goapp test ./api
+  - (cd web && npm test)
 
 after_success: |
   test "$TRAVIS_PULL_REQUEST" == "false" && \

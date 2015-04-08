@@ -101,3 +101,7 @@ gulp.task("serve", ["build"], function() {
     });
     gulp.watch("src/**/*", ["build-watch"]);
 });
+
+gulp.task("test", function(callback) {
+    callback();
+});
