@@ -44,14 +44,14 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # TODO @daniel Enable all of these.
-# echo ">> Installing go tools."
-# goapp get -u github.com/golang/lint/golint
-# goapp get -u github.com/nsf/gocode
-# goapp get -u golang.org/x/tools/cmd/cover
-# goapp get -u golang.org/x/tools/cmd/goimports
-# goapp get -u golang.org/x/tools/cmd/oracle
-# goapp get -u golang.org/x/tools/cmd/vet
-# goapp get -u sourcegraph.com/sqs/goreturns
+echo ">> Installing go tools."
+goapp get github.com/golang/lint/golint
+# goapp get github.com/nsf/gocode
+goapp get golang.org/x/tools/cmd/cover
+goapp get golang.org/x/tools/cmd/goimports
+goapp get golang.org/x/tools/cmd/oracle
+# goapp get golang.org/x/tools/cmd/vet
+# goapp get sourcegraph.com/sqs/goreturns
 
 # Atom.
 which -s apm
