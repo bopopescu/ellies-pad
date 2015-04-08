@@ -22,5 +22,4 @@ script:
 after_success: |
   test "$TRAVIS_PULL_REQUEST" == "false" && \
   test "$TRAVIS_BRANCH" == "master" && \
-  echo "$APPENGINE_PASSWORD" | \
-    appcfg.py update ./api \ --email="$APPENGINE_EMAIL" --passin
+  echo "$APPENGINE_PASSWORD" | appcfg.py update ./api \ --email="$APPENGINE_EMAIL" --passin
