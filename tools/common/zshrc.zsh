@@ -18,4 +18,5 @@ source "$ELLIESPATH/tools/common/antigen/antigen.zsh"
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle npm
+antigen bundle tmux
 antigen theme minimal
