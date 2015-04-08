@@ -22,4 +22,4 @@ echo ">> Installing npm packages."
 
 echo ">> Installing git hooks."
 rm -rf .git/hooks
-ln -s ../tools/common/githooks .git/hooks
+ln -s ../tools/common/git/hooks .git/hooks
