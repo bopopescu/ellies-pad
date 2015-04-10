@@ -15,6 +15,7 @@ var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
+var stylish = require("jshint-stylish");
 var uglify = require("gulp-uglify");
 var util = require("gulp-util");
 var watchify = require("watchify");
@@ -80,8 +81,7 @@ gulp.task("lint", ["format"], function() {
         .pipe(jshint(_.merge(jshintrc, {
             devel: env === "development"
         })))
-        // TODO @daniel Enable this reporter.
-        //.pipe(jshint.reporter("jshint-stylish"))
+        .pipe(jshint.reporter(stylish))
         .pipe(jshint.reporter("fail"));
 });
 
