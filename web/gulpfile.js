@@ -80,7 +80,8 @@ gulp.task("lint", ["format"], function() {
         .pipe(jshint(_.merge(jshintrc, {
             devel: env === "development"
         })))
-        .pipe(jshint.reporter("jshint-stylish"))
+        // TODO @daniel Enable this reporter.
+        //.pipe(jshint.reporter("jshint-stylish"))
         .pipe(jshint.reporter("fail"));
 });
 
