@@ -23,7 +23,7 @@ var watchify = require("watchify");
 var env = process.env.NODE_ENV || "development";
 
 var bundler = browserify(watchify.args);
-bundler.add("./src/app.js");
+bundler.add("./src/index.js");
 bundler.transform("strictify");
 bundler.transform(envify({
     NODE_ENV: env,
@@ -52,7 +52,7 @@ function bundle() {
 bundler.on("update", bundle);
 
 gulp.task("build", ["clean"], function() {
-    return gulp.src("src/app.html")
+    return gulp.src("src/index.html")
         .pipe(inject(bundle()))
         .pipe(gulp.dest("dist/"));
 });
@@ -88,7 +88,7 @@ gulp.task("serve", ["build"], function() {
         notify: true,
         server: {
             baseDir: ".",
-            index: "dist/app.html"
+            index: "dist/index.html"
         },
         port: 8081,
         ghostMode: {

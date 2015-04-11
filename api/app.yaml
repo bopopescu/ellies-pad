@@ -12,5 +12,5 @@ handlers:
 - url: /dist
   static_dir: web/dist
 - url: /.*
-  static_files: web/dist/app.html
-  upload: web/dist/app.html
+  static_files: web/dist/index.html
+  upload: web/dist/index.html
