@@ -8,3 +8,6 @@ npm-debug.log
 # Go
 bin/
 pkg/
+
+# Python
+*.pyc

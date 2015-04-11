@@ -6,16 +6,22 @@ go:
 # Use container infrastructure.
 sudo: false
 
+cache:
+  directories:
+    - web/node_modules
+
 install:
   - export ELLIESPATH="$TRAVIS_BUILD_DIR"
   - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
+  - export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
   - tools/common/setup.bash
 
 script:
+  - tools/common/git/hooks/pre-commit
   - goapp test ./api
+  - (cd web && npm test)
 
 after_success: |
   test "$TRAVIS_PULL_REQUEST" == "false" && \
   test "$TRAVIS_BRANCH" == "master" && \
-  echo "$APPENGINE_PASSWORD" | \
-    appcfg.py update ./api \ --email="$APPENGINE_EMAIL" --passin
+  echo "$APPENGINE_PASSWORD" | appcfg.py update ./api --email="$APPENGINE_EMAIL" --passin

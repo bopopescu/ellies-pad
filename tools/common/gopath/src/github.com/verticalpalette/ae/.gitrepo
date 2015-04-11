@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:verticalpalette/ae.git
+	branch = master
+	commit = 35a0c95a6ff65479083e1ab6013ca0de7392813c
+	parent = 695beb0e8283ff41c8c9744be9b0376ec6cc366c
+	cmdver = 0.2.1

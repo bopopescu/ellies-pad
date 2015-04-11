@@ -11,15 +11,22 @@ if ! [[ $PATH =~ /tools/(linux|osx)/64-bit/bin ]]; then
   exit 1
 fi
 
-if [[ -z $GOPATH ]]; then
-  echo "Please set \$GOPATH."
+if ! [[ $GOPATH =~ /tools/common/gopath ]]; then
+  echo "Please add \$ELLIESPATH/tools/common/gopath to your \$GOPATH."
   exit 1
 fi
 
 cd "$ELLIESPATH"
 
-echo ">> Installing go packages."
-goapp get ./task
+# TODO @daniel Enable all of these.
+echo ">> Installing Go tools."
+goapp get github.com/golang/lint/golint
+# goapp get github.com/nsf/gocode
+goapp get golang.org/x/tools/cmd/cover
+goapp get golang.org/x/tools/cmd/goimports
+goapp get golang.org/x/tools/cmd/oracle
+# goapp get golang.org/x/tools/cmd/vet
+# goapp get sourcegraph.com/sqs/goreturns
 
 echo ">> Installing npm packages."
 (cd web && npm install)
@@ -46,16 +53,8 @@ if [[ $? -ne 0 ]]; then
   echo "$include" >> .git/config
 fi
 
-echo ">> Installing go tools."
-goapp get -u github.com/golang/lint/golint
-goapp get -u github.com/nsf/gocode
-goapp get -u golang.org/x/tools/cmd/cover
-goapp get -u golang.org/x/tools/cmd/goimports
-goapp get -u golang.org/x/tools/cmd/oracle
-goapp get -u sourcegraph.com/sqs/goreturns
-
 # Atom.
-which apm
+which -s apm
 if [[ $? -eq 0 ]]; then
   echo ">> Installing atom packages."
   apm install Sublime-Style-Column-Selection

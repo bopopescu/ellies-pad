@@ -15,6 +15,7 @@ var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
+var stylish = require("jshint-stylish");
 var uglify = require("gulp-uglify");
 var util = require("gulp-util");
 var watchify = require("watchify");
@@ -64,7 +65,7 @@ gulp.task("clean", function(callback) {
     del(["dist/"], callback);
 });
 
-gulp.task("format", function() {
+gulp.task("checkFormat", function() {
     return gulp.src(["*.js", "src/**/*.js"])
         .pipe(beautify({
             config: ".jsbeautifyrc",
@@ -72,7 +73,7 @@ gulp.task("format", function() {
         }));
 });
 
-gulp.task("lint", ["format"], function() {
+gulp.task("lint", ["checkFormat"], function() {
     var jshintrc = jshintcli.getConfig("./.jshintrc");
     delete jshintrc.dirname;
 
@@ -80,7 +81,7 @@ gulp.task("lint", ["format"], function() {
         .pipe(jshint(_.merge(jshintrc, {
             devel: env === "development"
         })))
-        .pipe(jshint.reporter("jshint-stylish"))
+        .pipe(jshint.reporter(stylish))
         .pipe(jshint.reporter("fail"));
 });
 
@@ -100,4 +101,8 @@ gulp.task("serve", ["build"], function() {
         online: true
     });
     gulp.watch("src/**/*", ["build-watch"]);
+});
+
+gulp.task("test", function(callback) {
+    callback();
 });

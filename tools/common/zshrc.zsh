@@ -3,6 +3,7 @@
 ZSHRC_DIR=$(dirname $0:A)
 export ELLIESPATH=${ZSHRC_DIR/\/tools\/common/}
 export GOPATH=${ELLIESPATH/src\/github.com\/verticalpalette\/ellies-pad/}
+export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
 
 alias ep="cd $ELLIESPATH"
 
@@ -16,6 +17,11 @@ source "$ELLIESPATH/tools/common/antigen/antigen.zsh"
 
 # zsh themes and plugins
 antigen use oh-my-zsh
+
 antigen bundle git
 antigen bundle npm
+antigen bundle tmux
 antigen theme minimal
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+antigen apply
