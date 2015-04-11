@@ -3,10 +3,6 @@ set -e
 
 echo ">> Building web app."
 cd "$ELLIESPATH/web"
-
-# TODO @daniel Remove this debugging line.
-ls node_modules
-
 npm run deploy
 
 echo ">> Deploying to AppEngine."
