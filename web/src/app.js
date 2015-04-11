@@ -1,5 +1,5 @@
-var React = require("React");
 var color = require("color");
+var React = require("react");
 
 var CreateTask = require("./task/CreateTask");
 

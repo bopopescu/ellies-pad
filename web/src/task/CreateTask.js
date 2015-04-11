@@ -1,5 +1,5 @@
-var React = require("React");
 var radium = require("radium");
+var React = require("react");
 
 // TODO:
 // Pull lightening and darkening colors into a helper.
