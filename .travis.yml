@@ -13,7 +13,7 @@ cache:
 install:
   - export ELLIESPATH="$TRAVIS_BUILD_DIR"
   - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
-  - export GOPATH="$GOPATH:$ELLIESPATH/tools/common/gopath"
+  - export GOPATH="$GOPATH:$ELLIESPATH/3rdparty/go"
   - tools/common/setup.bash
 
 script:
