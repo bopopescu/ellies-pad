@@ -65,7 +65,7 @@ gulp.task("clean", function(callback) {
     del(["dist/"], callback);
 });
 
-gulp.task("format", function() {
+gulp.task("checkFormat", function() {
     return gulp.src(["*.js", "src/**/*.js"])
         .pipe(beautify({
             config: ".jsbeautifyrc",
@@ -73,7 +73,7 @@ gulp.task("format", function() {
         }));
 });
 
-gulp.task("lint", ["format"], function() {
+gulp.task("lint", ["checkFormat"], function() {
     var jshintrc = jshintcli.getConfig("./.jshintrc");
     delete jshintrc.dirname;
 
