@@ -22,7 +22,7 @@ var watchify = require("watchify");
 
 var env = process.env.NODE_ENV || "development";
 
-var bundler = watchify(browserify(watchify.args));
+var bundler = browserify(watchify.args);
 bundler.add("./src/app.js");
 bundler.transform("strictify");
 bundler.transform(envify({
@@ -55,9 +55,7 @@ gulp.task("build-watch", ["build"], browserSync.reload);
 
 gulp.task("build", ["clean", "lint"], function() {
     return gulp.src("src/app.html")
-        .pipe(inject(bundle(), {
-            relative: true
-        }))
+        .pipe(inject(bundle()))
         .pipe(gulp.dest("dist/"));
 });
 
