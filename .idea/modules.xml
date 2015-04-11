@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ellies-pad.iml" filepath="$PROJECT_DIR$/ellies-pad.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tools/common/gopath/gopath.iml" filepath="$PROJECT_DIR$/tools/common/gopath/gopath.iml" />
+      <module fileurl="file://$PROJECT_DIR$/3rdparty/go/go.iml" filepath="$PROJECT_DIR$/3rdparty/go/go.iml" />
     </modules>
   </component>
 </project>

@@ -11,8 +11,8 @@ if ! [[ $PATH =~ /tools/(linux|osx)/64-bit/bin ]]; then
   exit 1
 fi
 
-if ! [[ $GOPATH =~ /tools/common/gopath ]]; then
-  echo "Please add \$ELLIESPATH/tools/common/gopath to your \$GOPATH."
+if ! [[ $GOPATH =~ /3rdparty/go ]]; then
+  echo "Please add \$ELLIESPATH/3rdparty/go to your \$GOPATH."
   exit 1
 fi
 
