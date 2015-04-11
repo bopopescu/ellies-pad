@@ -15,6 +15,7 @@ var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
+var strictify = require("strictify");
 var stylish = require("jshint-stylish");
 var uglify = require("gulp-uglify");
 var util = require("gulp-util");
@@ -24,7 +25,7 @@ var env = process.env.NODE_ENV || "development";
 
 var bundler = browserify(watchify.args);
 bundler.add("./src/index.js");
-bundler.transform("strictify");
+bundler.transform(strictify);
 bundler.transform(envify({
     NODE_ENV: env,
     API_URL: (function() {
@@ -69,6 +70,14 @@ gulp.task("checkFormat", function() {
 
 gulp.task("clean", function(callback) {
     del(["dist/"], callback);
+});
+
+gulp.task("format", function() {
+    return gulp.src(["*.js", "src/**/*.js"])
+        .pipe(beautify({
+            config: ".jsbeautifyrc",
+            mode: "VERIFY_AND_WRITE"
+        }));
 });
 
 gulp.task("lint", ["checkFormat"], function() {
