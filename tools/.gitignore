@@ -2,5 +2,8 @@
 # so don't implicitly ignore anything.
 !*
 
+# OS X
+.DS_Store
+
 # Python
 *.pyc

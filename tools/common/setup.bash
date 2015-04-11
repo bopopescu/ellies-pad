@@ -18,6 +18,16 @@ fi
 
 cd "$ELLIESPATH"
 
+# TODO @daniel Enable all of these.
+echo ">> Installing Go tools."
+goapp get github.com/golang/lint/golint
+# goapp get github.com/nsf/gocode
+goapp get golang.org/x/tools/cmd/cover
+goapp get golang.org/x/tools/cmd/goimports
+goapp get golang.org/x/tools/cmd/oracle
+# goapp get golang.org/x/tools/cmd/vet
+# goapp get sourcegraph.com/sqs/goreturns
+
 echo ">> Installing npm packages."
 (cd web && npm install)
 
@@ -42,15 +52,6 @@ if [[ $? -ne 0 ]]; then
   echo ">> Installing git config."
   echo "$include" >> .git/config
 fi
-
-# TODO @daniel Enable this.
-# echo ">> Installing go tools."
-# goapp get -u github.com/golang/lint/golint
-# goapp get -u github.com/nsf/gocode
-# goapp get -u golang.org/x/tools/cmd/cover
-# goapp get -u golang.org/x/tools/cmd/goimports
-# goapp get -u golang.org/x/tools/cmd/oracle
-# goapp get -u sourcegraph.com/sqs/goreturns
 
 # Atom.
 which -s apm
