@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;ellies-pad&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../.DS_Store" />
+      <root url="file://$PROJECT_DIR$/../../nsf" />
+      <root url="file://$PROJECT_DIR$/../../golang" />
+      <root url="file://$PROJECT_DIR$/../../.DS_Store" />
+      <root url="file://$PROJECT_DIR$/../.DS_Store" />
+      <root url="file://$PROJECT_DIR$/../../../golang.org" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

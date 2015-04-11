@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="WEB_MODULE" version="4">
+<module type="GO_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/task" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/3rdparty/go/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/3rdparty/go/pkg" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/antigen" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/git-subrepo" />
       <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18" />
@@ -13,8 +18,8 @@
       <excludeFolder url="file://$MODULE_DIR$/web/dist" />
       <excludeFolder url="file://$MODULE_DIR$/web/node_modules" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Go 1.4.1 (appengine-1.9.18)" jdkType="Go SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Node.js v0.12.2 Core Modules" level="application" />
+    <orderEntry type="library" name="GOPATH &lt;ellies-pad&gt;" level="project" />
   </component>
 </module>
