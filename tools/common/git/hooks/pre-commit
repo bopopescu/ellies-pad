@@ -6,5 +6,5 @@ golint ./api
 golint ./task
 
 cd "$ELLIESPATH/web"
-ls
-npm run gulp -- lint
+# npm run gulp -- lint
+npm test
