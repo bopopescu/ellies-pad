@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -e -x
 
-cd "$ELLIESPATH"
-golint ./api
-golint ./task
+(cd "$ELLIESPATH" && golint ./api && golint ./task)
 
-cd "$ELLIESPATH/web"
-npm run gulp -- lint
+(cd "$ELLIESPATH/web" && npm run gulp -- lint)
