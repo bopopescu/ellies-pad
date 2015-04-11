@@ -21,7 +21,8 @@ script:
   - goapp test ./api
   - (cd web && npm test)
 
-after_success: |
+after_success: tools/common/deploy.bash
+#  |
 #  test "$TRAVIS_PULL_REQUEST" == "false" && \
 #  test "$TRAVIS_BRANCH" == "master" && \
-  tools/common/deploy.bash
+#    tools/common/deploy.bash
