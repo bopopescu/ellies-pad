@@ -14,6 +14,8 @@ install:
   - export ELLIESPATH="$TRAVIS_BUILD_DIR"
   - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
   - export GOPATH="$GOPATH:$ELLIESPATH/3rdparty/go"
+  - git config user.name "Ellie DuBois"
+  - git config user.email "ellie@elliespad.com"
   - tools/common/setup.bash
 
 script:
