@@ -1,15 +1,27 @@
-//var color = require("color");
 var React = require("react");
+var Router = require("react-router");
 
-//var CreateTask = require("../task/CreateTask");
+var CreateTask = require("../task/CreateTask");
 var ViewMixin = require("../common/ViewMixin");
 
 var App = React.createClass({
     mixins: [ViewMixin],
 
+    statics: {
+        routes: function() {
+            return React.createElement(Router.Route, {
+                    name: "/app/App",
+                    path: "/",
+                    handler: App
+                },
+                CreateTask.routes()
+            );
+        }
+    },
+
     getStyles: function() {
         return {
-            color: "#ff0000"
+            height: "100%"
         };
     },
 
@@ -17,7 +29,9 @@ var App = React.createClass({
         return React.DOM.div({
                 style: this.getBuiltStyles()
             },
-            "hello");
+            "Ellie's Pad",
+            React.createElement(Router.RouteHandler)
+        );
     }
 });
 
