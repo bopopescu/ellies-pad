@@ -1,10 +1,27 @@
 #!/usr/bin/env bash
-set -e -x
+set -x
 
+# Don't lint changes that aren't being committed.
 cd "$ELLIESPATH"
-golint ./api
-golint ./task
+git stash save --keep-index --include-untracked 'Running pre-commit hook'
 
-cd "$ELLIESPATH/web"
-# TODO @daniel Figure out why `npm run gulp -- lint` doesn't work.
-npm run lint
+{
+    # Go.
+    golint ./api &&
+    golint ./task &&
+
+    # Web.
+    cd "$ELLIESPATH/web" &&
+    gulp lint
+}
+
+# Exit with the same error code as the linters.
+lint=${?}
+
+# Return the working directory to its original state.
+# See http://stackoverflow.com/questions/20479794/ for why we reset.
+cd "$ELLIESPATH"
+git reset --hard --quiet
+git stash pop --index --quiet
+
+exit ${lint}

@@ -5,8 +5,6 @@
   "repository": "github.com/verticalpalette/ellies-pad/web",
   "scripts": {
     "deploy": "NODE_ENV=production gulp build",
-    "gulp": "gulp",
-    "lint": "gulp lint",
     "test": "gulp test"
   },
   "devDependencies": {

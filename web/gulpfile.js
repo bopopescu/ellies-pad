@@ -15,6 +15,7 @@ var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
+var strictify = require("strictify");
 var stylish = require("jshint-stylish");
 var uglify = require("gulp-uglify");
 var util = require("gulp-util");
@@ -23,8 +24,8 @@ var watchify = require("watchify");
 var env = process.env.NODE_ENV || "development";
 
 var bundler = browserify(watchify.args);
-bundler.add("./src/app.js");
-bundler.transform("strictify");
+bundler.add("./src/index.js");
+bundler.transform(strictify);
 bundler.transform(envify({
     NODE_ENV: env,
     API_URL: (function() {
@@ -52,7 +53,7 @@ function bundle() {
 bundler.on("update", bundle);
 
 gulp.task("build", ["clean"], function() {
-    return gulp.src("src/app.html")
+    return gulp.src("src/index.html")
         .pipe(inject(bundle()))
         .pipe(gulp.dest("dist/"));
 });
@@ -69,6 +70,14 @@ gulp.task("checkFormat", function() {
 
 gulp.task("clean", function(callback) {
     del(["dist/"], callback);
+});
+
+gulp.task("format", function() {
+    return gulp.src(["*.js", "src/**/*.js"])
+        .pipe(beautify({
+            config: ".jsbeautifyrc",
+            mode: "VERIFY_AND_WRITE"
+        }));
 });
 
 gulp.task("lint", ["checkFormat"], function() {
@@ -88,7 +97,7 @@ gulp.task("serve", ["build"], function() {
         notify: true,
         server: {
             baseDir: ".",
-            index: "dist/app.html"
+            index: "dist/index.html"
         },
         port: 8081,
         ghostMode: {
