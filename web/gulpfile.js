@@ -95,10 +95,7 @@ gulp.task("lint", ["checkFormat"], function() {
 gulp.task("serve", ["build"], function() {
     browserSync({
         open: false,
-        server: {
-            baseDir: ".",
-            index: "dist/index.html"
-        }
+        proxy: "localhost:8080"
     });
     gulp.watch("src/**/*", ["build-watch"]);
 });
