@@ -3,7 +3,7 @@ set -x
 
 # Don't lint changes that aren't being committed.
 cd "$ELLIESPATH"
-git stash save --keep-index --include-untracked
+git stash save --keep-index --include-untracked 'Running pre-commit hook'
 
 {
     # Go.
@@ -16,6 +16,13 @@ git stash save --keep-index --include-untracked
     npm run lint
 }
 
+# Exit with the same error code as the linters.
+lint=${?}
+
 # Return the working directory to its original state.
+# See http://stackoverflow.com/questions/20479794/ for why we reset.
 cd "$ELLIESPATH"
-git stash pop --quiet
+git reset --hard --quiet
+git stash pop --index --quiet
+
+exit ${lint}
