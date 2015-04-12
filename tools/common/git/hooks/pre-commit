@@ -12,8 +12,7 @@ git stash save --keep-index --include-untracked 'Running pre-commit hook'
 
     # Web.
     cd "$ELLIESPATH/web" &&
-    # TODO @daniel Figure out why `npm run gulp -- lint` doesn't work.
-    npm run lint
+    gulp lint
 }
 
 # Exit with the same error code as the linters.
