@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
-set -e -x
+set -x
 
 # Don't lint changes that aren't being committed.
-git stash save --keep-index --include-untracked
-
 cd "$ELLIESPATH"
-
-# Don't lint changes that aren't being committed.
 git stash save --keep-index --include-untracked
 
-golint ./api
-golint ./task
+{
+    # Go.
+    golint ./api &&
+    golint ./task &&
 
-cd "$ELLIESPATH/web"
-# TODO @daniel Figure out why `npm run gulp -- lint` doesn't work.
-npm run lint
+    # Web.
+    cd "$ELLIESPATH/web" &&
+    # TODO @daniel Figure out why `npm run gulp -- lint` doesn't work.
+    npm run lint
+}
 
 # Return the working directory to its original state.
 cd "$ELLIESPATH"
