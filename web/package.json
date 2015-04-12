@@ -33,6 +33,7 @@
     "lodash": "^3.6.0",
     "radium": "^0.10.0",
     "react": "^0.12.2",
-    "react-router": "^0.12.4"
+    "react-router": "^0.12.4",
+    "reflux": "^0.2.7"
   }
 }
