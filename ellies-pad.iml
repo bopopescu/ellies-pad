@@ -7,12 +7,13 @@
       <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/3rdparty/go/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/3rdparty/go/pkg" />
+      <excludeFolder url="file://$MODULE_DIR$/3rdparty" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/antigen" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/git-subrepo" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/bin" />
       <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18" />
       <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/node-v0.12.2-linux-x64" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/bin" />
       <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18" />
       <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/node-v0.12.2-darwin-x64" />
       <excludeFolder url="file://$MODULE_DIR$/web/dist" />

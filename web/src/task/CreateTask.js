@@ -1,5 +1,6 @@
 var radium = require("radium");
 var React = require("react");
+var Router = require("react-router");
 
 // TODO:
 // Pull lightening and darkening colors into a helper.
@@ -114,6 +115,16 @@ var Button = React.createClass({
 });
 
 var CreateTask = React.createClass({
+    statics: {
+        routes: function() {
+            return React.createElement(Router.Route, {
+                name: "/task/CreateTask",
+                path: "/tasks/create",
+                handler: CreateTask
+            });
+        }
+    },
+
     getStyles: function() {
         return {
             borderRadius: 4,
@@ -130,7 +141,7 @@ var CreateTask = React.createClass({
 
     render: function() {
         var styles = this.getStyles();
-        var color = this.props.color;
+        var color = this.props.color || require("color")("#663399");
 
         var taskName = React.createElement(TextField, {
             placeholder: "Task Name",

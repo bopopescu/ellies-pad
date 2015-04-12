@@ -3,7 +3,7 @@ set -x
 
 # Don't lint changes that aren't being committed.
 cd "$ELLIESPATH"
-git stash save --keep-index --include-untracked 'Running pre-commit hook'
+git stash save --keep-index --include-untracked --quiet 'Running pre-commit hook'
 
 {
     # Go.

@@ -23,42 +23,55 @@ var watchify = require("watchify");
 
 var env = process.env.NODE_ENV || "development";
 
-var bundler = browserify(watchify.args);
-bundler.add("./src/index.js");
-bundler.transform(strictify);
-bundler.transform(envify({
-    NODE_ENV: env,
-    API_URL: (function() {
-        if (env === "production") {
-            return "http://elliespad.com/api";
-        } else {
-            return "http://localhost:8080/api";
-        }
-    })()
-}));
-bundler.on("log", util.log);
+function build(bundler) {
+    bundler.add("./src/index.js");
+    bundler.transform(strictify);
+    bundler.transform(envify({
+        NODE_ENV: env,
+        API_URL: (function() {
+            if (env === "production") {
+                return "http://elliespad.com/api";
+            } else {
+                return "http://localhost:8080/api";
+            }
+        })()
+    }));
+    bundler.on("log", util.log);
 
-function bundle() {
-    return bundler.bundle()
-        .on("error", util.log.bind(util, "Browserify Error"))
-        .pipe(source("bundle.js"))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({
-            loadMaps: true
-        }))
-        .pipe(gulpif(env === "production", uglify()))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest("dist/"));
-}
-bundler.on("update", bundle);
+    function bundle() {
+        return bundler.bundle()
+            .on("error", function(err) {
+                util.log(util.colors.magenta("browserify"), err.message);
+                bundler.emit("end");
+            })
+            .pipe(source("bundle.js"))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({
+                loadMaps: true
+            }))
+            .pipe(gulpif(env === "production", uglify()))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest("dist/"))
+            // TODO @daniel Reload the browser when updating unbundled files, e.g. index.html.
+            .pipe(browserSync.reload({
+                once: true,
+                stream: true
+            }));
+    }
+    bundler.on("update", bundle);
 
-gulp.task("build", ["clean"], function() {
     return gulp.src("src/index.html")
         .pipe(inject(bundle()))
         .pipe(gulp.dest("dist/"));
+}
+
+gulp.task("build", ["clean"], function() {
+    return build(browserify());
 });
 
-gulp.task("build-watch", ["build"], browserSync.reload);
+gulp.task("buildWatch", ["clean"], function() {
+    return build(watchify(browserify(watchify.args)));
+});
 
 gulp.task("checkFormat", function() {
     return gulp.src(["*.js", "src/**/*.js"])
@@ -92,22 +105,11 @@ gulp.task("lint", ["checkFormat"], function() {
         .pipe(jshint.reporter("fail"));
 });
 
-gulp.task("serve", ["build"], function() {
+gulp.task("serve", ["buildWatch"], function() {
     browserSync({
-        notify: true,
-        server: {
-            baseDir: ".",
-            index: "dist/index.html"
-        },
-        port: 8081,
-        ghostMode: {
-            clicks: true,
-            forms: true,
-            scroll: true
-        },
-        online: true
+        open: false,
+        proxy: "localhost:8080"
     });
-    gulp.watch("src/**/*", ["build-watch"]);
 });
 
 gulp.task("test", function(callback) {
