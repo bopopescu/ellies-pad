@@ -13,7 +13,6 @@ var gulpif = require("gulp-if");
 var inject = require("gulp-inject");
 var jshint = require("gulp-jshint");
 var jshintcli = require("jshint/src/cli");
-//var replace = require("gulp-replace");
 var source = require("vinyl-source-stream");
 var sourcemaps = require("gulp-sourcemaps");
 var strictify = require("strictify");
