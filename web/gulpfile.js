@@ -94,18 +94,11 @@ gulp.task("lint", ["checkFormat"], function() {
 
 gulp.task("serve", ["build"], function() {
     browserSync({
-        notify: true,
+        open: false,
         server: {
             baseDir: ".",
             index: "dist/index.html"
-        },
-        port: 8081,
-        ghostMode: {
-            clicks: true,
-            forms: true,
-            scroll: true
-        },
-        online: true
+        }
     });
     gulp.watch("src/**/*", ["build-watch"]);
 });
