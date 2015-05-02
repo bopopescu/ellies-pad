@@ -1,32 +1,26 @@
 Vagrant.configure(2) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "verticalpalette/ellies-pad"
+  config.vm.box_url = "http://storage.googleapis.com/verticalpalette/ellies-pad.box"
 
   # BrowserSync
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Display the VirtualBox GUI when booting the machine
-  #   vb.gui = true
-  #
-  #   # Customize the amount of memory on the VM:
-  #   vb.memory = "1024"
-  # end
+  config.vm.synced_folder ".", "/home/vagrant/gopath/src/github.com/verticalpalette/ellies-pad"
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   sudo apt-get update
-  #   sudo apt-get install -y apache2
-  # SHELL
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 4
+    vb.memory = 4096
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    # sudo apt-get update
+    # sudo apt-get install git
+    # sudo apt-get install zsh
+
+    # export ELLIESPATH="/home/vagrant/gopath/src/github.com/verticalpalette/ellies-pad"
+    # export GOPATH="/home/vagrant/gopath:$ELLIESPATH/3rdparty/go"
+    # export PATH="$ELLIESPATH/tools/linux/64-bit/bin:$PATH"
+  SHELL
 end
