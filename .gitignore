@@ -11,3 +11,6 @@ pkg/
 
 # Python
 *.pyc
+
+# Vagrant
+.vagrant/
