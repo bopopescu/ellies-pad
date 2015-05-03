@@ -19,6 +19,7 @@ Vagrant.configure(2) do |config|
     # sudo apt-get install git
     # sudo apt-get install zsh
 
+    # export VAGRANT=true
     # export ELLIESPATH="/home/vagrant/gopath/src/github.com/verticalpalette/ellies-pad"
     # export GOPATH="/home/vagrant/gopath:$ELLIESPATH/3rdparty/go"
     # export PATH="$ELLIESPATH/tools/linux/64-bit/bin:$PATH"
