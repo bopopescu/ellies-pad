@@ -8,11 +8,15 @@ sudo: false
 
 cache:
   directories:
+    - tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18
+    - tools/linux/64-bit/node-v0.12.2-linux-x64
+    - tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18
+    - tools/osx/64-bit/node-v0.12.2-darwin-x64
     - web/node_modules
 
 install:
   - export ELLIESPATH="$TRAVIS_BUILD_DIR"
-  - export PATH="$PATH:$ELLIESPATH/tools/linux/64-bit/bin"
+  - export PATH="$ELLIESPATH/tools/linux/64-bit/bin:$PATH"
   - export GOPATH="$GOPATH:$ELLIESPATH/3rdparty/go"
   - git config user.name "Ellie DuBois"
   - git config user.email "ellie@elliespad.com"
