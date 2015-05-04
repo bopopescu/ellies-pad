@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     11280     `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package appengine
@@ -110,7 +110,7 @@ package appengine
 
 $$
 _go_.6          0           0     0     644     180717    `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ldDgithub.com/golang/protobuf/proto.amath.a şJ"".ModulesServiceError_ErrorCode.Enum  €  ~dH‹%    H;awè    ëêHƒìH    H‰$è    H‹D$‹l$‰(H‰D$ HƒÄÃ

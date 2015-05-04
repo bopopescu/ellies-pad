@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     29214     `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package plugin
@@ -205,7 +205,7 @@ package plugin
 
 $$
 _go_.6          0           0     0     644     93005     `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ldbufio.a

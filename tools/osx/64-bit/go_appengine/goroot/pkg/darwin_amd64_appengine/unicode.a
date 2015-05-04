@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     9561      `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package unicode
@@ -265,7 +265,7 @@ package unicode
 
 $$
  _go_.6          0           0     0     644     276010    `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ld þ"".IsDigit  à  ÄeH‹%    H;awè    ëêHƒì‹D$ =ÿ   ƒø0|ƒø9

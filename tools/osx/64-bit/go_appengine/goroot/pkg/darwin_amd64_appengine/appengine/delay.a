@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     29222     `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package delay
@@ -245,7 +245,7 @@ package delay
 
 $$
 _go_.6          0           0     0     644     67512     `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ldbytes.aencoding/gob.aerrors.a

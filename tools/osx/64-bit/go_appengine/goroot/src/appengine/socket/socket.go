@@ -270,6 +270,16 @@ func (cn *Conn) SetWriteDeadline(t time.Time) error {
 	return nil
 }
 
+// KeepAlive signals that the connection is still in use.
+// It may be called to prevent the socket being closed due to inactivity.
+func (cn *Conn) KeepAlive() error {
+	req := &pb.GetSocketNameRequest{
+		SocketDescriptor: &cn.desc,
+	}
+	res := &pb.GetSocketNameReply{}
+	return cn.c.Call("remote_socket", "GetSocketName", req, res, nil)
+}
+
 func init() {
 	appengine_internal.RegisterErrorCodeMap("remote_socket", pb.RemoteSocketServiceError_ErrorCode_name)
 }

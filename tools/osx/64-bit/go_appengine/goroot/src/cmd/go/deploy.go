@@ -22,7 +22,7 @@ deploy looks in your current directory for an app.yaml file.
 The -application flag sets the application ID, overriding the application value
 from the app.yaml file.
 
-The -version flag sets the major version, overriding the version valu from the
+The -version flag sets the major version, overriding the version value from the
 app.yaml file.
 
 The -oauth flag causes authentication to be done using OAuth2, instead of

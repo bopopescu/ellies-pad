@@ -22,6 +22,7 @@ It has these top-level messages:
 	Reference
 	User
 	EntityProto
+	EntityMetadata
 	CompositeProperty
 	Index
 	CompositeIndex
@@ -33,6 +34,10 @@ It has these top-level messages:
 	InternalHeader
 	Transaction
 	Query
+	RegionPoint
+	CircleRegion
+	RectangleRegion
+	GeoRegion
 	CompiledQuery
 	CompiledCursor
 	Cursor
@@ -88,6 +93,7 @@ const (
 	Property_BLOBKEY          Property_Meaning = 17
 	Property_ENTITY_PROTO     Property_Meaning = 19
 	Property_INDEX_VALUE      Property_Meaning = 18
+	Property_EMPTY_LIST       Property_Meaning = 24
 )
 
 var Property_Meaning_name = map[int32]string{
@@ -111,6 +117,7 @@ var Property_Meaning_name = map[int32]string{
 	17: "BLOBKEY",
 	19: "ENTITY_PROTO",
 	18: "INDEX_VALUE",
+	24: "EMPTY_LIST",
 }
 var Property_Meaning_value = map[string]int32{
 	"NO_MEANING":       0,
@@ -133,6 +140,7 @@ var Property_Meaning_value = map[string]int32{
 	"BLOBKEY":          17,
 	"ENTITY_PROTO":     19,
 	"INDEX_VALUE":      18,
+	"EMPTY_LIST":       24,
 }
 
 func (x Property_Meaning) Enum() *Property_Meaning {
@@ -411,6 +419,7 @@ const (
 	Query_Filter_EQUAL                 Query_Filter_Operator = 5
 	Query_Filter_IN                    Query_Filter_Operator = 6
 	Query_Filter_EXISTS                Query_Filter_Operator = 7
+	Query_Filter_CONTAINED_IN_REGION   Query_Filter_Operator = 8
 )
 
 var Query_Filter_Operator_name = map[int32]string{
@@ -421,6 +430,7 @@ var Query_Filter_Operator_name = map[int32]string{
 	5: "EQUAL",
 	6: "IN",
 	7: "EXISTS",
+	8: "CONTAINED_IN_REGION",
 }
 var Query_Filter_Operator_value = map[string]int32{
 	"LESS_THAN":             1,
@@ -430,6 +440,7 @@ var Query_Filter_Operator_value = map[string]int32{
 	"EQUAL":                 5,
 	"IN":                    6,
 	"EXISTS":                7,
+	"CONTAINED_IN_REGION":   8,
 }
 
 func (x Query_Filter_Operator) Enum() *Query_Filter_Operator {
@@ -496,6 +507,7 @@ const (
 	Error_CAPABILITY_DISABLED          Error_ErrorCode = 9
 	Error_TRY_ALTERNATE_BACKEND        Error_ErrorCode = 10
 	Error_SAFE_TIME_TOO_OLD            Error_ErrorCode = 11
+	Error_RESOURCE_EXHAUSTED           Error_ErrorCode = 12
 )
 
 var Error_ErrorCode_name = map[int32]string{
@@ -510,6 +522,7 @@ var Error_ErrorCode_name = map[int32]string{
 	9:  "CAPABILITY_DISABLED",
 	10: "TRY_ALTERNATE_BACKEND",
 	11: "SAFE_TIME_TOO_OLD",
+	12: "RESOURCE_EXHAUSTED",
 }
 var Error_ErrorCode_value = map[string]int32{
 	"BAD_REQUEST":                  1,
@@ -523,6 +536,7 @@ var Error_ErrorCode_value = map[string]int32{
 	"CAPABILITY_DISABLED":          9,
 	"TRY_ALTERNATE_BACKEND":        10,
 	"SAFE_TIME_TOO_OLD":            11,
+	"RESOURCE_EXHAUSTED":           12,
 }
 
 func (x Error_ErrorCode) Enum() *Error_ErrorCode {
@@ -911,7 +925,8 @@ type Property struct {
 	Name             *string           `protobuf:"bytes,3,req,name=name" json:"name,omitempty"`
 	Value            *PropertyValue    `protobuf:"bytes,5,req,name=value" json:"value,omitempty"`
 	Multiple         *bool             `protobuf:"varint,4,req,name=multiple" json:"multiple,omitempty"`
-	Embedded         *bool             `protobuf:"varint,6,opt,name=embedded,def=0" json:"embedded,omitempty"`
+	Stashed          *int32            `protobuf:"varint,6,opt,name=stashed,def=-1" json:"stashed,omitempty"`
+	Computed         *bool             `protobuf:"varint,7,opt,name=computed,def=0" json:"computed,omitempty"`
 	XXX_unrecognized []byte            `json:"-"`
 }
 
@@ -920,7 +935,8 @@ func (m *Property) String() string { return proto.CompactTextString(m) }
 func (*Property) ProtoMessage()    {}
 
 const Default_Property_Meaning Property_Meaning = Property_NO_MEANING
-const Default_Property_Embedded bool = false
+const Default_Property_Stashed int32 = -1
+const Default_Property_Computed bool = false
 
 func (m *Property) GetMeaning() Property_Meaning {
 	if m != nil && m.Meaning != nil {
@@ -957,11 +973,18 @@ func (m *Property) GetMultiple() bool {
 	return false
 }
 
-func (m *Property) GetEmbedded() bool {
-	if m != nil && m.Embedded != nil {
-		return *m.Embedded
+func (m *Property) GetStashed() int32 {
+	if m != nil && m.Stashed != nil {
+		return *m.Stashed
 	}
-	return Default_Property_Embedded
+	return Default_Property_Stashed
+}
+
+func (m *Property) GetComputed() bool {
+	if m != nil && m.Computed != nil {
+		return *m.Computed
+	}
+	return Default_Property_Computed
 }
 
 type Path struct {
@@ -1170,6 +1193,30 @@ func (m *EntityProto) GetRawProperty() []*Property {
 		return m.RawProperty
 	}
 	return nil
+}
+
+type EntityMetadata struct {
+	CreatedVersion   *int64 `protobuf:"varint,1,opt,name=created_version" json:"created_version,omitempty"`
+	UpdatedVersion   *int64 `protobuf:"varint,2,opt,name=updated_version" json:"updated_version,omitempty"`
+	XXX_unrecognized []byte `json:"-"`
+}
+
+func (m *EntityMetadata) Reset()         { *m = EntityMetadata{} }
+func (m *EntityMetadata) String() string { return proto.CompactTextString(m) }
+func (*EntityMetadata) ProtoMessage()    {}
+
+func (m *EntityMetadata) GetCreatedVersion() int64 {
+	if m != nil && m.CreatedVersion != nil {
+		return *m.CreatedVersion
+	}
+	return 0
+}
+
+func (m *EntityMetadata) GetUpdatedVersion() int64 {
+	if m != nil && m.UpdatedVersion != nil {
+		return *m.UpdatedVersion
+	}
+	return 0
 }
 
 type CompositeProperty struct {
@@ -1849,6 +1896,7 @@ func (m *Query) GetPersistOffset() bool {
 type Query_Filter struct {
 	Op               *Query_Filter_Operator `protobuf:"varint,6,req,name=op,enum=datastore.Query_Filter_Operator" json:"op,omitempty"`
 	Property         []*Property            `protobuf:"bytes,14,rep,name=property" json:"property,omitempty"`
+	GeoRegion        *GeoRegion             `protobuf:"bytes,40,opt,name=geo_region" json:"geo_region,omitempty"`
 	XXX_unrecognized []byte                 `json:"-"`
 }
 
@@ -1866,6 +1914,13 @@ func (m *Query_Filter) GetOp() Query_Filter_Operator {
 func (m *Query_Filter) GetProperty() []*Property {
 	if m != nil {
 		return m.Property
+	}
+	return nil
+}
+
+func (m *Query_Filter) GetGeoRegion() *GeoRegion {
+	if m != nil {
+		return m.GeoRegion
 	}
 	return nil
 }
@@ -1894,6 +1949,102 @@ func (m *Query_Order) GetDirection() Query_Order_Direction {
 		return *m.Direction
 	}
 	return Default_Query_Order_Direction
+}
+
+type RegionPoint struct {
+	Latitude         *float64 `protobuf:"fixed64,1,req,name=latitude" json:"latitude,omitempty"`
+	Longitude        *float64 `protobuf:"fixed64,2,req,name=longitude" json:"longitude,omitempty"`
+	XXX_unrecognized []byte   `json:"-"`
+}
+
+func (m *RegionPoint) Reset()         { *m = RegionPoint{} }
+func (m *RegionPoint) String() string { return proto.CompactTextString(m) }
+func (*RegionPoint) ProtoMessage()    {}
+
+func (m *RegionPoint) GetLatitude() float64 {
+	if m != nil && m.Latitude != nil {
+		return *m.Latitude
+	}
+	return 0
+}
+
+func (m *RegionPoint) GetLongitude() float64 {
+	if m != nil && m.Longitude != nil {
+		return *m.Longitude
+	}
+	return 0
+}
+
+type CircleRegion struct {
+	Center           *RegionPoint `protobuf:"bytes,1,req,name=center" json:"center,omitempty"`
+	RadiusMeters     *float64     `protobuf:"fixed64,2,req,name=radius_meters" json:"radius_meters,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
+}
+
+func (m *CircleRegion) Reset()         { *m = CircleRegion{} }
+func (m *CircleRegion) String() string { return proto.CompactTextString(m) }
+func (*CircleRegion) ProtoMessage()    {}
+
+func (m *CircleRegion) GetCenter() *RegionPoint {
+	if m != nil {
+		return m.Center
+	}
+	return nil
+}
+
+func (m *CircleRegion) GetRadiusMeters() float64 {
+	if m != nil && m.RadiusMeters != nil {
+		return *m.RadiusMeters
+	}
+	return 0
+}
+
+type RectangleRegion struct {
+	Southwest        *RegionPoint `protobuf:"bytes,1,req,name=southwest" json:"southwest,omitempty"`
+	Northeast        *RegionPoint `protobuf:"bytes,2,req,name=northeast" json:"northeast,omitempty"`
+	XXX_unrecognized []byte       `json:"-"`
+}
+
+func (m *RectangleRegion) Reset()         { *m = RectangleRegion{} }
+func (m *RectangleRegion) String() string { return proto.CompactTextString(m) }
+func (*RectangleRegion) ProtoMessage()    {}
+
+func (m *RectangleRegion) GetSouthwest() *RegionPoint {
+	if m != nil {
+		return m.Southwest
+	}
+	return nil
+}
+
+func (m *RectangleRegion) GetNortheast() *RegionPoint {
+	if m != nil {
+		return m.Northeast
+	}
+	return nil
+}
+
+type GeoRegion struct {
+	Circle           *CircleRegion    `protobuf:"bytes,1,opt,name=circle" json:"circle,omitempty"`
+	Rectangle        *RectangleRegion `protobuf:"bytes,2,opt,name=rectangle" json:"rectangle,omitempty"`
+	XXX_unrecognized []byte           `json:"-"`
+}
+
+func (m *GeoRegion) Reset()         { *m = GeoRegion{} }
+func (m *GeoRegion) String() string { return proto.CompactTextString(m) }
+func (*GeoRegion) ProtoMessage()    {}
+
+func (m *GeoRegion) GetCircle() *CircleRegion {
+	if m != nil {
+		return m.Circle
+	}
+	return nil
+}
+
+func (m *GeoRegion) GetRectangle() *RectangleRegion {
+	if m != nil {
+		return m.Rectangle
+	}
+	return nil
 }
 
 type CompiledQuery struct {

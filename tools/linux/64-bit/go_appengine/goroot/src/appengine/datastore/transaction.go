@@ -110,6 +110,9 @@ func runOnce(c appengine.Context, f func(appengine.Context) error, opts *Transac
 // must be careful not to assume that any of f's changes have been committed
 // until RunInTransaction returns nil.
 //
+// Since f may be called multiple times, f should usually be idempotent.
+// datastore.Get is not idempotent when unmarshaling slice fields.
+//
 // Nested transactions are not supported; c may not be a transaction context.
 func RunInTransaction(c appengine.Context, f func(tc appengine.Context) error, opts *TransactionOptions) error {
 	if _, ok := c.(*transaction); ok {

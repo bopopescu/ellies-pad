@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     8777      `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package textproto
@@ -109,7 +109,7 @@ package textproto
 
 $$
  _go_.6          0           0     0     644     197374    `
-go object linux amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object linux amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ldsync.abufio.abytes.aio.aio/ioutil.astrconv.astrings.a

@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     9930      `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package time
@@ -141,7 +141,7 @@ package time
 
 $$
 _go_.6          0           0     0     644     461850    `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13lderrors.asyscall.async.aruntime.a þ,"".startsWithLowerCase  À  ªeH‹%    H;awè    ëêH‹L$Hƒù uÆD$ ÃH‹\$Hƒù v¶+@€ýar@€ýzwÆD$ÃÆD$ ëøè    

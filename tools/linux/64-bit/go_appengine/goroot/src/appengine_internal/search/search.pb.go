@@ -735,9 +735,11 @@ func (m *FieldTypes) GetType() []FieldValue_ContentType {
 }
 
 type IndexShardSettings struct {
-	PrevNumShards    []int32 `protobuf:"varint,1,rep,name=prev_num_shards" json:"prev_num_shards,omitempty"`
-	NumShards        *int32  `protobuf:"varint,2,req,name=num_shards,def=1" json:"num_shards,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	PrevNumShards            []int32 `protobuf:"varint,1,rep,name=prev_num_shards" json:"prev_num_shards,omitempty"`
+	NumShards                *int32  `protobuf:"varint,2,req,name=num_shards,def=1" json:"num_shards,omitempty"`
+	PrevNumShardsSearchFalse []int32 `protobuf:"varint,3,rep,name=prev_num_shards_search_false" json:"prev_num_shards_search_false,omitempty"`
+	LocalReplica             *string `protobuf:"bytes,4,opt,name=local_replica,def=" json:"local_replica,omitempty"`
+	XXX_unrecognized         []byte  `json:"-"`
 }
 
 func (m *IndexShardSettings) Reset()         { *m = IndexShardSettings{} }
@@ -758,6 +760,20 @@ func (m *IndexShardSettings) GetNumShards() int32 {
 		return *m.NumShards
 	}
 	return Default_IndexShardSettings_NumShards
+}
+
+func (m *IndexShardSettings) GetPrevNumShardsSearchFalse() []int32 {
+	if m != nil {
+		return m.PrevNumShardsSearchFalse
+	}
+	return nil
+}
+
+func (m *IndexShardSettings) GetLocalReplica() string {
+	if m != nil && m.LocalReplica != nil {
+		return *m.LocalReplica
+	}
+	return ""
 }
 
 type FacetValue struct {
@@ -835,14 +851,13 @@ func (m *DocumentMetadata) GetCommittedStVersion() int64 {
 }
 
 type Document struct {
-	Id               *string            `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
-	Language         *string            `protobuf:"bytes,2,opt,name=language,def=en" json:"language,omitempty"`
-	Field            []*Field           `protobuf:"bytes,3,rep,name=field" json:"field,omitempty"`
-	OrderId          *int32             `protobuf:"varint,4,opt,name=order_id" json:"order_id,omitempty"`
-	Storage          *Document_Storage  `protobuf:"varint,5,opt,name=storage,enum=search.Document_Storage,def=0" json:"storage,omitempty"`
-	Acl              *AccessControlList `protobuf:"bytes,6,opt,name=acl" json:"acl,omitempty"`
-	Facet            []*Facet           `protobuf:"bytes,8,rep,name=facet" json:"facet,omitempty"`
-	XXX_unrecognized []byte             `json:"-"`
+	Id               *string           `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	Language         *string           `protobuf:"bytes,2,opt,name=language,def=en" json:"language,omitempty"`
+	Field            []*Field          `protobuf:"bytes,3,rep,name=field" json:"field,omitempty"`
+	OrderId          *int32            `protobuf:"varint,4,opt,name=order_id" json:"order_id,omitempty"`
+	Storage          *Document_Storage `protobuf:"varint,5,opt,name=storage,enum=search.Document_Storage,def=0" json:"storage,omitempty"`
+	Facet            []*Facet          `protobuf:"bytes,8,rep,name=facet" json:"facet,omitempty"`
+	XXX_unrecognized []byte            `json:"-"`
 }
 
 func (m *Document) Reset()         { *m = Document{} }
@@ -885,13 +900,6 @@ func (m *Document) GetStorage() Document_Storage {
 		return *m.Storage
 	}
 	return Default_Document_Storage
-}
-
-func (m *Document) GetAcl() *AccessControlList {
-	if m != nil {
-		return m.Acl
-	}
-	return nil
 }
 
 func (m *Document) GetFacet() []*Facet {

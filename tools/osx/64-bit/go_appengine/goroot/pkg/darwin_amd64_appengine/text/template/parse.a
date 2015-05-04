@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     19864     `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package parse
@@ -210,7 +210,7 @@ package parse
 
 $$
 _go_.6          0           0     0     644     690226    `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ld

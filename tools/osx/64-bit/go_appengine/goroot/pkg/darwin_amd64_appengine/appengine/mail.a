@@ -1,6 +1,6 @@
 !<arch>
 __.PKGDEF       0           0     0     644     9801      `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 $$
 package mail
@@ -94,7 +94,7 @@ package mail
 
 $$
  _go_.6          0           0     0     644     41340     `
-go object darwin amd64 go1.4.1 (appengine-1.9.18) X:precisestack
+go object darwin amd64 go1.4.2 (appengine-1.9.19) X:precisestack
 
 !
   go13ldnet/mail.aappengine.a(appengine_internal.aDgithub.com/golang/protobuf/proto.a2appengine_internal/base.a2appengine_internal/mail.a ş"".Send  €  ôeH‹%    H;awè    ëêHƒì8HÇD$X    HÇD$`    H‹\$@H‰$H‹t$HH‰t$H5    Hl$H‰ïH¥H¥H‹\$PH‰\$ è    H‹L$(H‹D$0H‰L$XH‰D$`HƒÄ8Ã
