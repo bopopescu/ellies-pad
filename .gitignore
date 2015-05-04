@@ -5,5 +5,5 @@
 *.pyc
 
 # Vagrant
-/.vagrant/
+/.vagrant
 /ellies-pad.box
