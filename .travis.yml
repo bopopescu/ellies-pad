@@ -8,10 +8,10 @@ sudo: false
 
 cache:
   directories:
-    - tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18
-    - tools/linux/64-bit/node-v0.12.2-linux-x64
-    - tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18
-    - tools/osx/64-bit/node-v0.12.2-darwin-x64
+    - tools/linux/64-bit/go_appengine
+    - tools/linux/64-bit/node
+    - tools/osx/64-bit/go_appengine
+    - tools/osx/64-bit/node
     - web/node_modules
 
 install:

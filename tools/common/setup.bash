@@ -24,11 +24,11 @@ echo ">> Installing Go tools."
 # Update the timestamps on the pre-built object files,
 # otherwise Go will try to build the AppEngine SDKs and fail.
 (
-  cd "$ELLIESPATH/tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goroot" &&
+  cd "$ELLIESPATH/tools/linux/64-bit/go_appengine/goroot" &&
   find . -name "*.a" -exec touch {} \;
 )
 (
-  cd "$ELLIESPATH/tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18/goroot" &&
+  cd "$ELLIESPATH/tools/osx/64-bit/go_appengine/goroot" &&
   find . -name "*.a" -exec touch {} \;
 )
 
