@@ -20,6 +20,18 @@ cd "$ELLIESPATH"
 
 # TODO @daniel Enable all of these.
 echo ">> Installing Go tools."
+
+# Update the timestamps on the pre-built object files,
+# otherwise Go will try to build the AppEngine SDKs and fail.
+(
+  cd "$ELLIESPATH/tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18/goroot" &&
+  find . -name "*.a" -exec touch {} \;
+)
+(
+  cd "$ELLIESPATH/tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18/goroot" &&
+  find . -name "*.a" -exec touch {} \;
+)
+
 goapp get github.com/golang/lint/golint
 # goapp get github.com/nsf/gocode
 goapp get golang.org/x/tools/cmd/cover
