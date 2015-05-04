@@ -50,7 +50,7 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="Go App Engine 1.9.18" project-jdk-type="Google Go App Engine SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_4" default="true" assert-keyword="true" jdk-15="false" project-jdk-name="Go 1.4.1 (appengine-1.9.18)" project-jdk-type="Go SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

@@ -7,20 +7,21 @@
       <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/web/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/.vagrant" />
       <excludeFolder url="file://$MODULE_DIR$/3rdparty" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/antigen" />
       <excludeFolder url="file://$MODULE_DIR$/tools/common/git-subrepo" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/common/gsutil" />
       <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/go_appengine_sdk_linux_amd64-1.9.18" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/node-v0.12.2-linux-x64" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/go_appengine" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/linux/64-bit/node" />
       <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/go_appengine_sdk_darwin_amd64-1.9.18" />
-      <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/node-v0.12.2-darwin-x64" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/go" />
+      <excludeFolder url="file://$MODULE_DIR$/tools/osx/64-bit/node" />
       <excludeFolder url="file://$MODULE_DIR$/web/dist" />
       <excludeFolder url="file://$MODULE_DIR$/web/node_modules" />
     </content>
-    <orderEntry type="jdk" jdkName="Go 1.4.1 (appengine-1.9.18)" jdkType="Go SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="GOPATH &lt;ellies-pad&gt;" level="project" />
   </component>
 </module>

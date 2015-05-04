@@ -4,3 +4,5 @@
 	ciam = commit -a -m
 	co = checkout
 	st = status
+[core]
+	preloadindex = true

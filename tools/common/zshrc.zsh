@@ -21,7 +21,7 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle npm
 antigen bundle tmux
-antigen theme minimal
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen theme minimal
 
 antigen apply

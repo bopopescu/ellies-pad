@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:hashicorp/go-multierror.git
+	branch = master
+	commit = fcdddc395df1ddf4247c69bd436e84cfa0733f7e
+	parent = ce0d2841b528a5fad1903fbb6236d9c40f1d9ce8
+	cmdver = 0.2.1
