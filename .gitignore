@@ -1,17 +1,9 @@
 # OS X
 .DS_Store
 
-# NPM
-node_modules/
-npm-debug.log
-
-# Go
-bin/
-pkg/
-
 # Python
 *.pyc
 
 # Vagrant
-.vagrant/
-ellies-pad.box
+/.vagrant/
+/ellies-pad.box
