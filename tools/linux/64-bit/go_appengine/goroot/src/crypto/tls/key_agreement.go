@@ -23,7 +23,7 @@ var errClientKeyExchange = errors.New("tls: invalid ClientKeyExchange message")
 var errServerKeyExchange = errors.New("tls: invalid ServerKeyExchange message")
 
 // rsaKeyAgreement implements the standard TLS key agreement where the client
-// encrypts the pre-master secret to the server's public key.
+// encrypts the pre-main secret to the server's public key.
 type rsaKeyAgreement struct{}
 
 func (ka rsaKeyAgreement) generateServerKeyExchange(config *Config, cert *Certificate, clientHello *clientHelloMsg, hello *serverHelloMsg) (*serverKeyExchangeMsg, error) {
@@ -31,8 +31,8 @@ func (ka rsaKeyAgreement) generateServerKeyExchange(config *Config, cert *Certif
 }
 
 func (ka rsaKeyAgreement) processClientKeyExchange(config *Config, cert *Certificate, ckx *clientKeyExchangeMsg, version uint16) ([]byte, error) {
-	preMasterSecret := make([]byte, 48)
-	_, err := io.ReadFull(config.rand(), preMasterSecret[2:])
+	preMainSecret := make([]byte, 48)
+	_, err := io.ReadFull(config.rand(), preMainSecret[2:])
 	if err != nil {
 		return nil, err
 	}
@@ -50,17 +50,17 @@ func (ka rsaKeyAgreement) processClientKeyExchange(config *Config, cert *Certifi
 		ciphertext = ckx.ciphertext[2:]
 	}
 
-	err = rsa.DecryptPKCS1v15SessionKey(config.rand(), cert.PrivateKey.(*rsa.PrivateKey), ciphertext, preMasterSecret)
+	err = rsa.DecryptPKCS1v15SessionKey(config.rand(), cert.PrivateKey.(*rsa.PrivateKey), ciphertext, preMainSecret)
 	if err != nil {
 		return nil, err
 	}
-	// We don't check the version number in the premaster secret.  For one,
+	// We don't check the version number in the premain secret.  For one,
 	// by checking it, we would leak information about the validity of the
-	// encrypted pre-master secret. Secondly, it provides only a small
+	// encrypted pre-main secret. Secondly, it provides only a small
 	// benefit against a downgrade attack and some implementations send the
 	// wrong version anyway. See the discussion at the end of section
 	// 7.4.7.1 of RFC 4346.
-	return preMasterSecret, nil
+	return preMainSecret, nil
 }
 
 func (ka rsaKeyAgreement) processServerKeyExchange(config *Config, clientHello *clientHelloMsg, serverHello *serverHelloMsg, cert *x509.Certificate, skx *serverKeyExchangeMsg) error {
@@ -68,15 +68,15 @@ func (ka rsaKeyAgreement) processServerKeyExchange(config *Config, clientHello *
 }
 
 func (ka rsaKeyAgreement) generateClientKeyExchange(config *Config, clientHello *clientHelloMsg, cert *x509.Certificate) ([]byte, *clientKeyExchangeMsg, error) {
-	preMasterSecret := make([]byte, 48)
-	preMasterSecret[0] = byte(clientHello.vers >> 8)
-	preMasterSecret[1] = byte(clientHello.vers)
-	_, err := io.ReadFull(config.rand(), preMasterSecret[2:])
+	preMainSecret := make([]byte, 48)
+	preMainSecret[0] = byte(clientHello.vers >> 8)
+	preMainSecret[1] = byte(clientHello.vers)
+	_, err := io.ReadFull(config.rand(), preMainSecret[2:])
 	if err != nil {
 		return nil, nil, err
 	}
 
-	encrypted, err := rsa.EncryptPKCS1v15(config.rand(), cert.PublicKey.(*rsa.PublicKey), preMasterSecret)
+	encrypted, err := rsa.EncryptPKCS1v15(config.rand(), cert.PublicKey.(*rsa.PublicKey), preMainSecret)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -85,7 +85,7 @@ func (ka rsaKeyAgreement) generateClientKeyExchange(config *Config, clientHello 
 	ckx.ciphertext[0] = byte(len(encrypted) >> 8)
 	ckx.ciphertext[1] = byte(len(encrypted))
 	copy(ckx.ciphertext[2:], encrypted)
-	return preMasterSecret, ckx, nil
+	return preMainSecret, ckx, nil
 }
 
 // sha1Hash calculates a SHA1 hash over the given byte slices.
@@ -179,7 +179,7 @@ func curveForCurveID(id CurveID) (elliptic.Curve, bool) {
 
 // ecdheRSAKeyAgreement implements a TLS key agreement where the server
 // generates a ephemeral EC public/private key pair and signs it. The
-// pre-master secret is then calculated using ECDH. The signature may
+// pre-main secret is then calculated using ECDH. The signature may
 // either be ECDSA or RSA.
 type ecdheKeyAgreement struct {
 	version    uint16
@@ -296,11 +296,11 @@ func (ka *ecdheKeyAgreement) processClientKeyExchange(config *Config, cert *Cert
 		return nil, errClientKeyExchange
 	}
 	x, _ = ka.curve.ScalarMult(x, y, ka.privateKey)
-	preMasterSecret := make([]byte, (ka.curve.Params().BitSize+7)>>3)
+	preMainSecret := make([]byte, (ka.curve.Params().BitSize+7)>>3)
 	xBytes := x.Bytes()
-	copy(preMasterSecret[len(preMasterSecret)-len(xBytes):], xBytes)
+	copy(preMainSecret[len(preMainSecret)-len(xBytes):], xBytes)
 
-	return preMasterSecret, nil
+	return preMainSecret, nil
 }
 
 func (ka *ecdheKeyAgreement) processServerKeyExchange(config *Config, clientHello *clientHelloMsg, serverHello *serverHelloMsg, cert *x509.Certificate, skx *serverKeyExchangeMsg) error {
@@ -398,9 +398,9 @@ func (ka *ecdheKeyAgreement) generateClientKeyExchange(config *Config, clientHel
 		return nil, nil, err
 	}
 	x, _ := ka.curve.ScalarMult(ka.x, ka.y, priv)
-	preMasterSecret := make([]byte, (ka.curve.Params().BitSize+7)>>3)
+	preMainSecret := make([]byte, (ka.curve.Params().BitSize+7)>>3)
 	xBytes := x.Bytes()
-	copy(preMasterSecret[len(preMasterSecret)-len(xBytes):], xBytes)
+	copy(preMainSecret[len(preMainSecret)-len(xBytes):], xBytes)
 
 	serialized := elliptic.Marshal(ka.curve, mx, my)
 
@@ -409,5 +409,5 @@ func (ka *ecdheKeyAgreement) generateClientKeyExchange(config *Config, clientHel
 	ckx.ciphertext[0] = byte(len(serialized))
 	copy(ckx.ciphertext[1:], serialized)
 
-	return preMasterSecret, ckx, nil
+	return preMainSecret, ckx, nil
 }

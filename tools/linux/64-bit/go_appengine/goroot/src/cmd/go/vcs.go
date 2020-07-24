@@ -114,7 +114,7 @@ var vcsGit = &vcsCmd{
 		{"show-ref tags/{tag} origin/{tag}", `((?:tags|origin)/\S+)$`},
 	},
 	tagSyncCmd:     "checkout {tag}",
-	tagSyncDefault: "checkout master",
+	tagSyncDefault: "checkout main",
 
 	scheme:     []string{"git", "https", "http", "git+ssh"},
 	pingCmd:    "ls-remote {scheme}://{repo}",
@@ -340,13 +340,13 @@ func (v *vcsCmd) download(dir string) error {
 	return v.run(dir, v.downloadCmd)
 }
 
-// fixDetachedHead switches a Git repository in dir from a detached head to the master branch.
+// fixDetachedHead switches a Git repository in dir from a detached head to the main branch.
 // Go versions before 1.2 downloaded Git repositories in an unfortunate way
 // that resulted in the working tree state being on a detached head.
 // That meant the repository was not usable for normal Git operations.
 // Go 1.2 fixed that, but we can't pull into a detached head, so if this is
 // a Git repository we check for being on a detached head and switch to the
-// real branch, almost always called "master".
+// real branch, almost always called "main".
 // TODO(dsymonds): Consider removing this for Go 1.3.
 func (v *vcsCmd) fixDetachedHead(dir string) error {
 	if v != vcsGit {
@@ -361,7 +361,7 @@ func (v *vcsCmd) fixDetachedHead(dir string) error {
 	if buildV {
 		log.Printf("%s on detached head; repairing", dir)
 	}
-	return v.run(dir, "checkout master")
+	return v.run(dir, "checkout main")
 }
 
 // tags returns the list of available tags for the repo in dir.

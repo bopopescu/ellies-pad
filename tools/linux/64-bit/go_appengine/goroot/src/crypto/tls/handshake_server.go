@@ -27,7 +27,7 @@ type serverHandshakeState struct {
 	ecdsaOk         bool
 	sessionState    *sessionState
 	finishedHash    finishedHash
-	masterSecret    []byte
+	mainSecret    []byte
 	certsFromClient [][]byte
 	cert            *Certificate
 }
@@ -305,7 +305,7 @@ func (hs *serverHandshakeState) doResumeHandshake() error {
 		}
 	}
 
-	hs.masterSecret = hs.sessionState.masterSecret
+	hs.mainSecret = hs.sessionState.mainSecret
 
 	return nil
 }
@@ -464,12 +464,12 @@ func (hs *serverHandshakeState) doFullHandshake() error {
 		hs.finishedHash.Write(certVerify.marshal())
 	}
 
-	preMasterSecret, err := keyAgreement.processClientKeyExchange(config, hs.cert, ckx, c.vers)
+	preMainSecret, err := keyAgreement.processClientKeyExchange(config, hs.cert, ckx, c.vers)
 	if err != nil {
 		c.sendAlert(alertHandshakeFailure)
 		return err
 	}
-	hs.masterSecret = masterFromPreMasterSecret(c.vers, preMasterSecret, hs.clientHello.random, hs.hello.random)
+	hs.mainSecret = mainFromPreMainSecret(c.vers, preMainSecret, hs.clientHello.random, hs.hello.random)
 
 	return nil
 }
@@ -478,7 +478,7 @@ func (hs *serverHandshakeState) establishKeys() error {
 	c := hs.c
 
 	clientMAC, serverMAC, clientKey, serverKey, clientIV, serverIV :=
-		keysFromMasterSecret(c.vers, hs.masterSecret, hs.clientHello.random, hs.hello.random, hs.suite.macLen, hs.suite.keyLen, hs.suite.ivLen)
+		keysFromMainSecret(c.vers, hs.mainSecret, hs.clientHello.random, hs.hello.random, hs.suite.macLen, hs.suite.keyLen, hs.suite.ivLen)
 
 	var clientCipher, serverCipher interface{}
 	var clientHash, serverHash macFunction
@@ -531,7 +531,7 @@ func (hs *serverHandshakeState) readFinished(out []byte) error {
 		return unexpectedMessageError(clientFinished, msg)
 	}
 
-	verify := hs.finishedHash.clientSum(hs.masterSecret)
+	verify := hs.finishedHash.clientSum(hs.mainSecret)
 	if len(verify) != len(clientFinished.verifyData) ||
 		subtle.ConstantTimeCompare(verify, clientFinished.verifyData) != 1 {
 		c.sendAlert(alertHandshakeFailure)
@@ -555,7 +555,7 @@ func (hs *serverHandshakeState) sendSessionTicket() error {
 	state := sessionState{
 		vers:         c.vers,
 		cipherSuite:  hs.suite.id,
-		masterSecret: hs.masterSecret,
+		mainSecret: hs.mainSecret,
 		certificates: hs.certsFromClient,
 	}
 	m.ticket, err = c.encryptTicket(&state)
@@ -575,7 +575,7 @@ func (hs *serverHandshakeState) sendFinished(out []byte) error {
 	c.writeRecord(recordTypeChangeCipherSpec, []byte{1})
 
 	finished := new(finishedMsg)
-	finished.verifyData = hs.finishedHash.serverSum(hs.masterSecret)
+	finished.verifyData = hs.finishedHash.serverSum(hs.mainSecret)
 	hs.finishedHash.Write(finished.marshal())
 	c.writeRecord(recordTypeHandshake, finished.marshal())
 
